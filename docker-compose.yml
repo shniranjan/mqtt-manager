@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mqtt-manager:
+    build: .
+    container_name: mqtt-manager
+    ports:
+      - "1883:1883"   # MQTT
+      - "8883:8883"   # WebSocket MQTT
+      - "8000:8000"   # Web UI + API
+    volumes:
+      - mqtt-data:/var/lib/mosquitto
+      - mqtt-config:/config
+    environment:
+      - MQTT_HOST=localhost
+      - MQTT_PORT=1883
+      - SERVER_PORT=8000
+      - MQTT_CONFIG_DIR=/config
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O-", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  mqtt-data:
+    driver: local
+  mqtt-config:
+    driver: local

@@ -1,0 +1,23 @@
+# Rust build artifacts
+core/target/
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# Git
+.git/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Agent files
+.hermes/
+AGENTS.md
